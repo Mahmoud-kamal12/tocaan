@@ -10,8 +10,8 @@ class PayPalGateway implements PaymentGatewayInterface
 {
     public function pay(Order $order): array
     {
-        $token = uniqid('checkout_');
-        $url = url("/fake-paypal/checkout/{$token}");
+        $token = uniqid('fake_paypal_', true);
+        $url = route('fake-paypal.checkout', $token);
 
         cache()->put($token, [
             'order_id' => $order->id,

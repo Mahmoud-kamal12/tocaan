@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\WebResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Services\Payments\PaymentCallbackFactory;
 use Illuminate\Http\Request;
@@ -17,12 +18,8 @@ use Illuminate\Http\Response;
 
 class PaymentController extends Controller
 {
-    public function store(Request $request, $orderId): JsonResponse
+    public function pay(StorePaymentRequest  $request, $orderId): JsonResponse
     {
-        $request->validate([
-            'payment_method' => 'required|string'
-        ]);
-
         $order = Order::with('payments')->findOrFail($orderId);
 
         if ($order->user_id !== auth()->id()) {
@@ -48,6 +45,7 @@ class PaymentController extends Controller
             'redirect_to' => $result['checkout_url']
         ], $result['message']);
     }
+
     public function callback(Request $request, string $paymentId): Response
     {
         $payment = Payment::where('payment_id', $paymentId)->firstOrFail();
