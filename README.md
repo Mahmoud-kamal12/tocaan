@@ -1,61 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+> 📌 *Note: This README was formatted with the help of ChatGPT to enhance structure, consistency, and visual clarity (icons, layout, sections).  
+> All project logic, architecture, and implementation decisions were fully developed independently.*
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 🧾 Laravel Order & Payment Management API ![GitHub repo size](https://img.shields.io/github/repo-size/Mahmoud-kamal12/tocaan?style=flat-square)
 
-## About Laravel
+This project is a clean, extensible API built with **Laravel 12** following clean code, SOLID principles, and an extendable architecture using the **Strategy + Factory patterns** for payment gateways.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### ✅ Authentication
+- JWT-based user registration and login
+- Secure routes using `auth:api` guard
 
-## Learning Laravel
+### ✅ Order Management
+- Create an order with multiple items
+- Update and delete orders (only if no payments are linked)
+- Filter orders by status (pending, confirmed, cancelled)
+- Soft delete support for orders
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### ✅ Payment Management
+- Process payments for confirmed orders only
+- Extendable architecture using `Strategy + Factory Pattern`
+- Simulated payment handling with redirect-based flow
+- Unified callback endpoint handling all gateways via Strategy
+- Resource-based responses for all endpoints
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🏗️ Tech Stack
 
-## Laravel Sponsors
+- Laravel 12
+- PHP 8.2+
+- JWT Authentication
+- Strategy Pattern for Payment Logic
+- RESTful API Design with proper HTTP codes
+- Postman Collection & Environment for easy testing
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🔄 Payment Simulation Flow
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+This project simulates a redirect-based gateway flow similar to real-world platforms like **PayPal**, but in a simplified way.
 
-## Contributing
+> ✅ A fake checkout URL is returned  
+> ✅ User clicks simulate success/failure  
+> ✅ A unified callback updates the payment status
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+💡 The architecture allows easy integration with **real gateways** (e.g., PayPal Sandbox or Fawry) by replacing the mock strategy with an API-integrated handler.
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📝 Notes on Scope
 
-## Security Vulnerabilities
+This implementation is simplified to match the scope of the task. The following were intentionally skipped:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Real payment integration (though the architecture supports it)
+- Product management table and stock validation
+- Notification handling or webhooks
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🔐 Authentication Flow
+
+1. `POST /register` → Register user
+2. `POST /login` → Get JWT token
+3. Use token as `Authorization: Bearer {{token}}` in all requests
+
+---
+
+## 📦 Postman Files
+
+- ✅ Collection: `order-payment-api.postman_collection.json`
+- ✅ Environment: `local-env.postman_environment.json`
+
+---
+
+## ⚙️ Setup Instructions
+
+```bash
+git clone http://github.com/Mahmoud-kamal12/tocaan.git
+cd your-project
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan jwt:secret
+php artisan serve
