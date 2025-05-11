@@ -71,8 +71,8 @@ This implementation is simplified to match the scope of the task. The following 
 
 ## 📦 Postman Files
 
-- ✅ Collection: `order-payment-api.postman_collection.json`
-- ✅ Environment: `local-env.postman_environment.json`
+- ✅ Collection: `Tocaan.postman_collection.json`
+- ✅ Environment: `Tocaan.postman_collection.json`
 
 ---
 
